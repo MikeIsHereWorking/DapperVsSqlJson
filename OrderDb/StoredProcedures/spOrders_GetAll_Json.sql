@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spOrders_GetAll_Json]
+﻿CREATE OR ALTER PROCEDURE [dbo].[spOrders_GetAll_Json]
 AS
 	SELECT 
 	Id
@@ -7,6 +7,7 @@ AS
 ,	(select 
 		[Id], [OrderId], [Item], [Price]
 	from dbo.OrderDetails
-	FOR JSON AUTO) OrderDetailModel
-FROM DBO.Orders
+	where orderId = M.id
+	FOR JSON AUTO) LineItems
+FROM DBO.Orders M
 FOR JSON AUTO
